@@ -1,0 +1,25 @@
+<div id='is-typing' class="hidden">Someone is typing ...</div>
+<div id='messages' class="messages-placeholder">
+  {{#each messages}}
+  <div>
+  <div class="message" data-msg-id="{{this._id}}">
+    <p>{{this.text}}</p>
+    <p class="repondre">Répondre</p>
+    {{#if this.response.length}}
+    <p class="reponses">{{this.response.length}} Réponses</p>
+    {{/if}}
+  </div>
+  <div class="hidden reply-placeholder">
+    <form class='form-ans'  data-msg-id="{{this._id}}">
+        <textarea id="ans"></textarea><button id="send-answer">Send</button>
+    </form>
+  </div>
+  <div class="hidden answers" data-msg-id="{{this._id}}">{{#if this.response.length}}{{#each this.response}}<div class="answer">{{this}}</div>{{/each}}{{/if}}</div>
+  </div>
+{{/each}}
+</div>
+<form id='form-msg'>
+  <div class="type-message-placeholder">
+    <input type="text" id="m" autocomplete="off" /><button class="send-message">Send</button>
+  </div>
+</form>

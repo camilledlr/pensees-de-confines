@@ -1,0 +1,140 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font: 2vh Helvetica, Arial;
+  background-color: paleturquoise;
+}
+header {
+  box-sizing: border-box;
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 20vh;
+}
+.title {
+  text-align: center;
+  color: grey;
+  font-size: 2em;
+  margin-bottom: .5em;
+}
+
+.explanation {
+  text-align: center;
+font-size: 1.2em;
+width: 90%;
+}
+#messages{
+  box-sizing: border-box;
+  height : 65vh;
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.type-message-placeholder {
+  position: relative;
+  background-color: white ; 
+  height: 100%;
+  width: 100%;
+  border-radius: 1em;
+}
+#form-msg {
+  box-sizing: border-box;
+  background: grey;
+  padding: 10px;
+  /* position: fixed;
+  bottom: 0; */
+  width: 100vw;
+  height: 15vh;
+}
+#form-msg input {
+  /* border: 0; */
+  border-radius: 1.5em;
+  padding: 1em;
+  width: 80vw;
+  margin-right: 0.5%;
+  border: none;
+  height: 100%;
+  font-size: 1.5em;
+}
+form .send-message {
+  width: 10vh;
+  height: 10vh;
+  border-radius: 50%;
+  background:  teal;
+  border: none;
+  padding: 10px;
+  color : white;
+  font-size: 1.2em;
+  position: absolute;
+  right: 3%;
+  top : calc(50% - 5vh)
+}
+.message {
+  /* list-style-type: none; */
+  background-color: whitesmoke;
+  margin: 1em;
+  padding: 1em;
+  width: fit-content;
+  border-radius: .5em;
+}
+.answer {
+  /* list-style-type: none; */
+  background-color: rgba(0, 128, 128, 0.534);
+  margin: 1em;
+  padding: 1em;
+  width: fit-content;
+  border-radius: .5em;
+}
+
+.repondre{
+  font-size: .8em;
+  color: teal;
+  text-decoration: underline;
+}
+
+.repondre:hover {
+  font-weight: bold;
+}
+.reply-placeholder {
+  position: relative;
+  font-size: 1em;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.hidden {
+  display: none;
+}
+.form-ans textarea {
+  border-radius: 1.5em;
+  padding: 1em;
+  width: 80vw;
+  border: none;
+  height: 20vh;
+  font-size: 1.2em;
+  margin: 0 auto;
+}
+
+#send-answer {
+  width: 8vh;
+  height: 8vh;
+  border-radius: 50%;
+  background:  teal;
+  border: none;
+  padding: 10px;
+  color : white;
+  font-size: 1.2em;
+  position: absolute;
+  right: 12%;
+  top : calc(50% - 4vh)
+}
+
+#is-typing {
+  
+}
