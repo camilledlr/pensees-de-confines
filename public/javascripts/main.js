@@ -60,6 +60,7 @@ document.getElementById("form-msg").onchange = function (e) {
 
 var resetMessage = () => {
   document.getElementById("m").value = "";
+  imageFile.value='';
   document.getElementById("m").style.cssText = "height: fit-content";
   document
     .querySelectorAll(".mood-labels")

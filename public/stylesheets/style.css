@@ -197,6 +197,7 @@ form .add-file {
 .date {
   /* background-color: yellow; */
   color : teal;
+  margin-bottom: 1em;
   /* font-weight: bold; */
 }
 .message-by-date{
