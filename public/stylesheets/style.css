@@ -134,6 +134,8 @@ font-weight: bolder;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
+  z-index: 2;
 }
 #form-msg textarea {
   border-radius: 1.5em;
@@ -415,14 +417,42 @@ font-size: 1.5em;
 .mood-labels:hover {
   transform: rotate(-360deg);
 }
-
-.hidden {
+#file-preview {
+  display: flex;
+  padding: 1.5em;
+  background-color: whitesmoke;
+  justify-content: space-between;
+  width: 100%;
+  height: 7em;
+  border-radius: 2em 2em 0 0;
+  position: absolute;
+  top: -7em;
+  -webkit-animation: myfirst1 .5s;
+  animation: myfirst1 .5s;
+  -webkit-animation-duration: .5s;
+  animation-duration: .5s;
+  animation-direction: normal;
+  -webkit-animation-direction: normal;
+  z-index: 0;
+}
+@keyframes myfirst1 {
+  0% {
+      top: 0%;
+  }
+  100% {
+      top: -7em;
+  }
+}
+#file-preview.hidden {
   display: none;
 }
-.opacity0 {
-  opacity: 0;
+
+#file-preview  p{
+color : #03032f;
+font-size: 1.3em;
+margin: 1.2em;
 }
-.opacity0 {
-  opacity: 0;
+.hidden {
+  display: none;
 }
 

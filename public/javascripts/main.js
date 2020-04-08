@@ -12,6 +12,13 @@ import api from "./api.js";
 //   console.log('yolo')
 //   window.scrollTo(0, 100);
 // }
+imageFile.onchange = function (e){
+  document.getElementById("file-preview").classList.remove('hidden')
+    if(imageFile.files[0]){
+      const tmpUrl = URL.createObjectURL(imageFile.files[0]);
+      document.getElementById("img-preview").src = tmpUrl;
+  }
+} 
 
 function createElement(
   elementType,
