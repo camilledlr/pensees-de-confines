@@ -68,6 +68,9 @@ document.getElementById("form-msg").onchange = function (e) {
 var resetMessage = () => {
   document.getElementById("m").value = "";
   imageFile.value='';
+  document.getElementById("img-preview").src = '';
+  console.log()
+  if (!document.getElementById("file-preview").classList.contains("hidden")) document.getElementById("file-preview").classList.add('hidden')
   document.getElementById("m").style.cssText = "height: fit-content";
   document
     .querySelectorAll(".mood-labels")
