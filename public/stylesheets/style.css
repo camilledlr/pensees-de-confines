@@ -219,7 +219,11 @@ form .add-file {
   font-size: .9em;
   border-radius: 1em;
 }
-
+.message-file {
+  width :100%;
+  display : block;
+  margin: 1em auto;
+}
 .message-text {
 margin: .7em 0;
 font-family: 'Roboto Mono', monospace;
@@ -298,6 +302,7 @@ font-family: 'Roboto Mono', monospace;
 #send-answer {
   padding: 10px;
   color : teal;
+  background-color: none;
 }
 
 .is-typing {
@@ -419,3 +424,4 @@ font-size: 1.5em;
 .opacity0 {
   opacity: 0;
 }
+

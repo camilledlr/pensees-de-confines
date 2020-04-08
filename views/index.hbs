@@ -12,6 +12,18 @@
         {{/if}}
         <p class="message-date">{{this.send_date}}</p>
         <span class="message-text">{{this.text}}</span>
+        {{#if this.file}}
+        {{#unless this.isVideo}}
+        <img class="message-file" alt='file' src='{{this.file}}' />
+        {{/unless}}
+        {{#if this.isVideo}}
+        <video width="90%" controls>
+        <source src='{{this.file}}' type="video/mp4">
+        Your browser does not support the video tag.
+        </video>
+        <img class="message-file" width="90%" alt='file' src='{{this.file}}' />
+        {{/if}}
+        {{/if}}
       <div class="message-actions">
         <p class="repondre">Répondre</p>
         <p class="reponses">
@@ -35,12 +47,13 @@
 <div class="footer">
 <div id='is-typing' class="hidden">Quelqu'un est en train d'écrire <div><span>.</span><span>.</span><span>.</span></div>
 </div>
-  <form id='form-msg'>
+  <form id='form-msg' enctype="multipart/form-data">
   <div class="type-message-placeholder">
     <textarea id="m" autocomplete="off"></textarea>
     <div class='message-buttons'>
     <div class='mini-buttons'>
-    <button class="add-file"><i class="fas fa-plus fa-lg"></i></button>
+      <input id='file-input' class='hidden' type="file" name="file">
+      <label class='add-file' for="file-input"><i class="fas fa-plus fa-lg"></i></label>
     </div>
     <button class="send-message"><i class="fas fa-paper-plane fa-lg"></i></button>
     </div>
