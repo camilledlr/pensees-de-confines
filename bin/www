@@ -10,6 +10,7 @@ var debug = require('debug')('pensees2confines:server');
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 const messageModel = require("../models/Message");
+var port = process.env.PORT || 3000;
 
 io.on('connection', function(socket){
   console.log('a user connected');
@@ -34,6 +35,6 @@ io.on('connection', function(socket){
   });
 });
 
-http.listen(3000, function(){
+http.listen(port, function(){
   console.log('listening on *:3000');
 });
