@@ -24,6 +24,11 @@
       const icnplace = createElement('i', moodPlace , ['far',icn, 'fa-2x'])
       return moodPlace
     }
+    function addSendAnswer (parentNode) {
+      const button = createElement('button', parentNode,'', '','send-answer')
+      const icnplace = createElement('i', button , ['fas', 'fa-paper-plane', 'fa-2x'])
+      return button
+    }
 
     //changer couleur des icns quand sélectionnés
       document.getElementById('form-msg').onchange = function (e) {
@@ -39,6 +44,7 @@
     // Poster un message
     document.getElementById('form-msg').onsubmit = function(e){
       e.preventDefault();
+      if (document.getElementById('m').value == '') return
       let moodSelected = null ;
       moodInputs.forEach((input)=> {
         if (input.checked) moodSelected = input.value;
@@ -78,11 +84,9 @@
 
     // Déclencher l'événement "is typing"
     typeInput.onkeydown = function(e) {
-      console.log('héhooo')
       socket.emit('ontype');
       var timeoooo = setTimeout(() => {
         socket.emit('stop ontype');
-        console.log('yoooo')
       }, 3000);
     }
 
@@ -99,7 +103,7 @@
   const replyPlaceholder  = createElement('div',msgPlaceholder,['hidden','reply-placeholder']);
   const replyForm  = createElement('form',replyPlaceholder ,['form-ans'], "", msg._id);
   const replyInput  = createElement('textarea',replyForm ,'', "", "ans");
-  const button = createElement('button',replyForm, '', 'Send', 'send-answer');
+  const button = addSendAnswer(replyForm);
   const answersPlaceholder = createElement('div', msgPlaceholder,['hidden','answers'], "", "", msg._id);
   msg.response.forEach((response)=> createElement('div', answersPlaceholder,['answer'],response, ""))
   reponses.onclick = (e)=>{

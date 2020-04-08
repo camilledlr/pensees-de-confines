@@ -42,6 +42,7 @@ header {
   position: relative;
   display: flex;
   flex-direction: column;
+  padding : 1em 0
 }
 #titre {
   width: 50vh;
@@ -148,6 +149,16 @@ font-weight: bolder;
   display: block;
   max-height: 20vh;
 }
+.message-buttons {
+  display: flex;
+  align-items: center;
+}
+.mini-buttons {
+margin-right: .4em;
+}
+ button {
+   outline: none;
+ }
 form .send-message {
   width: 3em;
   height: 3em;
@@ -157,6 +168,17 @@ form .send-message {
   /* padding: 10px; */
   color : white;
   font-size: 1.5em;
+}
+form .add-file {
+  width: 1.9em;
+  height: 1.9em;
+  border-radius: 50%;
+  background:  teal;
+  border: none;
+  /* padding: 10px; */
+  color : white;
+  font-size: 1.1em;
+  padding : .2em
 }
 .mood-placeholder {
   width: 3em;
