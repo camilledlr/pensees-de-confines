@@ -5,6 +5,7 @@
   box-sizing: border-box;
   scroll-behavior: smooth;
   font: 2vh Helvetica, Arial;
+  max-width: 100vw;
 }
 body {
   background-color: #03032f
@@ -183,8 +184,8 @@ form .send-message {
   background-color: whitesmoke;
   margin: 1em;
   padding: 1em 1.5em 1.5em;
-  min-width: 30vh;
-  max-width: 50vh;
+  min-width: 30vw;
+  max-width: 80vw;
   height: fit-content;
   font-size: .9em;
   border-radius: 1em;
@@ -317,12 +318,12 @@ font-size: 1.2em;
   margin-top: .6em;
   background-color: whitesmoke;
   transition: width .5s;
-  width: 20.5vh;
+  width: 36.5vw;
   position: relative;
 }
 
 #mood-select.expand {
-  width: 50vh;
+  width: 89vw;
 }
 
 #mood-button {
@@ -331,7 +332,7 @@ font-size: 1.2em;
   text-align: center;
   padding : .8em;
   border-radius: 2em;
-  width: 20vh;
+  width: 36.5vw;
   height: 100%;
   color: whitesmoke;
   z-index: 2;
