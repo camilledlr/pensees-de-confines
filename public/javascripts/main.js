@@ -6,6 +6,10 @@
     const moodInputs = document.querySelectorAll('.mood-inputs');
     var socket = io();
 
+    // window.onload = function(e){
+    //   console.log('yolo')
+    //   window.scrollTo(0, 100);
+    // }
     function createElement (elementType, parentNode, classList, text, id, customAttribute) {
       const newElement = document.createElement(elementType);
       parentNode.appendChild(newElement);
