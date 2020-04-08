@@ -118,6 +118,9 @@ font-weight: bolder;
   width: 100%;
   background-color: whitesmoke;
   border-radius: 2em;
+  justify-content: space-between;
+  margin: 0 1em;
+  padding-right: .6em;
 }
 #form-msg {
   box-sizing: border-box;
@@ -138,16 +141,16 @@ font-weight: bolder;
   width: 80vw;
   margin-right: 0.5%;
   border: none;
-  height: 8vh;
+  height: 100%;
   font-size: 1.5em;
   overflow:hidden;
   outline: none;
   display: block;
-  max-height: 30vh;
+  max-height: 20vh;
 }
 form .send-message {
-  width: 4em;
-  height: 4em;
+  width: 3em;
+  height: 3em;
   border-radius: 50%;
   background:  teal;
   border: none;
@@ -281,7 +284,7 @@ color: whitesmoke;
 display: flex;
 align-items: center;
 justify-content: center;
-font-size: 1.2em;
+font-size: 1.5em;
 }
 
 
@@ -327,14 +330,14 @@ font-size: 1.2em;
 }
 
 #mood-select.expand {
-  width: 89vw;
+  width: 85vw;
 }
 
 #mood-button {
   box-sizing: border-box;
   background-color: indianred;
   text-align: center;
-  padding : .8em;
+  padding : .5em;
   border-radius: 2em;
   width: 36.5vw;
   height: 100%;
@@ -353,8 +356,8 @@ font-size: 1.2em;
   display: flex;
   align-items: center;
   position: absolute;
-  top: 20%;
-  left: calc(50% - 2.1em);
+  top: 10%;
+  left: calc(50% - 1.7em);
   z-index: 0;
   -webkit-animation: myfirst .5s;
   animation: myfirst .5s;
@@ -377,6 +380,7 @@ font-size: 1.2em;
   display : none
 }
 .mood-labels {
+  font-size: 1.4em;
   transition: .5s;
 }
 
