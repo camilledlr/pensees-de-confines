@@ -52,10 +52,12 @@ imageFile.onchange = function (e){
 // display search modal
 songButton.onclick = function(e) {
   document.getElementById('search-modal').classList.toggle('hidden')
+  document.querySelector('.footer').classList.toggle('hidden')
 }
 
 document.getElementById('close-modal').onclick = function clodeModal (e) {
   document.getElementById('search-modal').classList.add('hidden')
+  document.querySelector('.footer').classList.toggle('hidden')
 }
 
 //display alert
