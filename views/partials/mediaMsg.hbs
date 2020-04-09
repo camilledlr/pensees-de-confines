@@ -1,0 +1,30 @@
+<div class="message-with-media" data-msg-id="{{this._id}}">
+        {{#if this.mood}}
+        <div class="mood-placeholder"><i class="far {{this.mood}} fa-2x"></i></div>
+        {{/if}}
+        <p class="message-date">{{this.send_date}}</p>
+        <span class="message-text">{{this.text}}</span>
+        {{#if this.song}}
+        <div class="player-div">
+        <iframe class="player"src="https://open.spotify.com/embed/track/{{this.song}}" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+        </div>
+        {{/if}}
+        {{#if this.file}}
+        {{#unless this.isVideo}}
+        <img class="message-file" alt='file' src='{{this.file}}' />
+        {{/unless}}
+        {{#if this.isVideo}}
+        <video width="90%" controls>
+        <source src='{{this.file}}' type="video/mp4">
+        Your browser does not support the video tag.
+        </video>
+        <img class="message-file" width="90%" alt='file' src='{{this.file}}' />
+        {{/if}}
+        {{/if}}
+      <div class="message-actions">
+        <p class="repondre">Répondre</p>
+        <p class="reponses">
+          {{#if this.response.length}}{{this.response.length}} Réponses{{/if}}
+        </p>
+      </div>
+      </div>

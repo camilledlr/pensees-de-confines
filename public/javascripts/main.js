@@ -5,13 +5,43 @@ const typeInput = document.getElementById("m");
 const formsAns = document.querySelectorAll(".form-ans");
 const moodInputs = document.querySelectorAll(".mood-inputs");
 const imageFile = document.getElementById("file-input");
+const searchInput = document.getElementById("search-input");
+const results = document.getElementById('results-placeholder');
+const result = document.querySelectorAll('song-result');
+const songButton = document.querySelector(".song-label");
 var socket = io();
 import api from "./api.js";
 
-// window.onload = function(e){
-//   console.log('yolo')
-//   window.scrollTo(0, 100);
-// }
+function displayResults (apiRes) {
+  apiRes.forEach((track)=> {
+    const result= createElement('div', results, ['song-result']);
+    const image = document.createElement('img');
+    result.appendChild(image);
+    image.src = track.album.images[0].url
+    const infos= createElement('div', result, ['song-infos']);
+    const title= createElement('h3', infos, '', track.name);
+    const artist= createElement('p', infos, '', track.artists[0].name);
+    result.onclick = function (e) {
+      result.classList.toggle('select-song')
+      document.getElementById('song-input').value = track.id;
+      document.getElementById("file-preview").classList.remove('hidden');
+      document.getElementById("img-preview").src = image.src;
+      console.log('on submit', track.id)
+    }
+  })
+}
+
+
+// request spotify
+//https://api.spotify.com/v1/search?q=bob%20year:2014&type=album
+searchInput.onchange = function (e){
+  api.get(`/search?q=${e.target.value}`)
+  .then(apiRes=> {
+    results.innerHTML =''
+    displayResults(apiRes.data)})
+  .catch(apiErr => console.log(apiErr))
+}
+//preview select file
 imageFile.onchange = function (e){
   document.getElementById("file-preview").classList.remove('hidden')
     if(imageFile.files[0]){
@@ -19,6 +49,23 @@ imageFile.onchange = function (e){
       document.getElementById("img-preview").src = tmpUrl;
   }
 } 
+// display search modal
+songButton.onclick = function(e) {
+  document.getElementById('search-modal').classList.toggle('hidden')
+}
+
+document.getElementById('close-modal').onclick = function clodeModal (e) {
+  document.getElementById('search-modal').classList.add('hidden')
+}
+
+//display alert
+function displayAlert(text) {
+  document.getElementById('alert').classList.remove('hidden')
+  document.getElementById('alert').innerText = text
+  const closeAlert = setTimeout(() => {
+    document.getElementById('alert').classList.add('hidden')
+  }, 3000);
+}
 
 function createElement(
   elementType,
@@ -69,8 +116,9 @@ var resetMessage = () => {
   document.getElementById("m").value = "";
   imageFile.value='';
   document.getElementById("img-preview").src = '';
-  console.log()
+  document.getElementById('song-input').value ='';
   if (!document.getElementById("file-preview").classList.contains("hidden")) document.getElementById("file-preview").classList.add('hidden')
+  if (!document.getElementById('search-modal').classList.contains("hidden")) document.getElementById('search-modal').classList.add('hidden')
   document.getElementById("m").style.cssText = "height: fit-content";
   document
     .querySelectorAll(".mood-labels")
@@ -87,8 +135,9 @@ var resetMessage = () => {
 // Poster un message
 document.getElementById("form-msg").onsubmit = function (e) {
   e.preventDefault();
-  if (document.getElementById("m").value == "") return;
+  if (document.getElementById("m").value == "") return displayAlert('Il manque un texte à ton post :)');
   let moodSelected = '';
+  let song = document.getElementById('song-input').value
   moodInputs.forEach((input) => {
     if (input.checked) moodSelected = input.value;
     input.checked = false;
@@ -96,15 +145,14 @@ document.getElementById("form-msg").onsubmit = function (e) {
   const formData = new FormData();
   formData.append('text', document.getElementById("m").value);
   formData.append('mood', moodSelected);
+  if (song) formData.append('song', song);
   if(imageFile.files[0]) formData.append('file', imageFile.files[0]);
     api.post('/new', formData)
     .then(res => {
-      resetMessage()});
-    // socket.emit(
-    //   "chat message",
-    //   document.getElementById("m").value,
-    //   moodSelected
-    // );
+      resetMessage()})
+    .catch(apiErr => {if (imageFile.files[0]) {displayAlert('Le format du fichier est invalide :(')
+    }else { displayAlert('Une erreur est survenue : (') }
+  })
 };
 
 // poster une réponse
@@ -129,17 +177,15 @@ typeInput.onkeydown = function (e) {
 
 // Afficher un nouveau message
 socket.on("chat message", function (msg) {
-  const msgPlaceholder = createElement(
-    "div",
-    document
-      .getElementById("messages")
-      .lastElementChild.querySelector(".message-by-date"),
-    ""
-  );
+  const msgclass = msg.file || msg.song ? 'message-with-media' : 'message'
+  const msgByDate = document.getElementById('messages').querySelector(':nth-child(2)')
+  const formerFirst = msgByDate.firstChild
+  const msgPlaceholder = document.createElement('div');
+  msgByDate.insertBefore(msgPlaceholder, formerFirst)
   const newMsg = createElement(
     "div",
     msgPlaceholder,
-    ["message"],
+    [msgclass],
     "",
     "",
     msg._id
@@ -163,6 +209,14 @@ socket.on("chat message", function (msg) {
     const imgMsg = createElement("img",newMsg,["message-file"])
     imgMsg.src = msg.file
     imgMsg.alt = 'image'
+  }
+  if (msg.song) {
+    const songPh = createElement("div",newMsg,["player-div"])
+    const songMsg = createElement("iframe",songPh,["player"])
+    songMsg.src = `https://open.spotify.com/embed/track/${msg.song}}`
+    songMsg.setAttribute('frameborder', "0");
+    songMsg.setAttribute('allowtransparency', "true");
+    songMsg.setAttribute('allow', "encrypted-media");
   }
   if (msg.mood) {
     const moodMsg = addMoodElement(newMsg, msg.mood);
@@ -214,7 +268,7 @@ socket.on("chat message", function (msg) {
   };
   document
     .getElementById("messages")
-    .scrollTo(0, document.getElementById("messages").scrollHeight);
+    .scrollTo(0, 0);
 });
 
 //Afficher une nouvelle réponse
@@ -246,13 +300,10 @@ socket.on("post answer", function (ans, msg_id) {
       .querySelector(`.reponses`).innerText = `${
       Number(formerNb) + 1
     } Réponses`;
-    // document.querySelector(`.message[data-msg-id="${msg_id}"]`).querySelector(`.reponses`).innerText = `${formerText[0]++} Réponses`
-    // const formerText = document.querySelector(`.message[data-msg-id="${msg_id}"]`).querySelector(`.reponses`).innerText;
-    // document.querySelector(`.message[data-msg-id="${msg_id}"]`).querySelector(`.reponses`).innerText = `${formerText[0]++} Réponses`
   }
 
   AnsPlaceholder.classList.remove("hidden");
-  const position = AnsPlaceholder.offsetTop;
+  const position = AnsPlaceholder.offsetTop/1.5
   document.getElementById("messages").scrollTo(0, position);
 });
 
@@ -272,7 +323,7 @@ repondreButtons.forEach((button) => {
     const answersForm =
       e.target.parentElement.parentElement.nextSibling.nextSibling;
     answersForm.classList.toggle("hidden");
-    const position = answersForm.offsetTop / 2;
+    const position = answersForm.offsetTop/1.5;
     if (!answersForm.classList.contains("hidden"))
       document.getElementById("messages").scrollTo(0, position);
   };

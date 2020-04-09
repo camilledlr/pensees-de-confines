@@ -154,10 +154,18 @@ font-weight: bolder;
 .message-buttons {
   display: flex;
   align-items: center;
+  height: 100%;
+  padding: 0;
 }
 .mini-buttons {
 margin-right: .4em;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: space-around;
+height: 5em;
 }
+
  button {
    outline: none;
  }
@@ -171,16 +179,18 @@ form .send-message {
   color : white;
   font-size: 1.5em;
 }
-form .add-file {
-  width: 1.9em;
-  height: 1.9em;
+.mini-button {
+  width: 2em;
+  height: 2em;
   border-radius: 50%;
   background:  teal;
   border: none;
-  /* padding: 10px; */
   color : white;
-  font-size: 1.1em;
-  padding : .2em
+  font-size: .9em;
+  padding : .5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .mood-placeholder {
   width: 3em;
@@ -200,6 +210,8 @@ form .add-file {
   /* background-color: yellow; */
   color : teal;
   margin-bottom: 1em;
+  font-size: 1.5em;
+  font-weight: bold;
   /* font-weight: bold; */
 }
 .message-by-date{
@@ -222,14 +234,44 @@ form .add-file {
   font-size: .9em;
   border-radius: 1em;
 }
+.message-with-media{
+  position: relative;
+  background-color: whitesmoke;
+  margin: 1em;
+  width: 80vw;
+  height: fit-content;
+  font-size: .9em;
+  border-radius: 1em;
+}
+.message-with-media  .message-actions{
+  margin : 1em;
+}
+
+.message-with-media .message-date {
+  padding-top: 2em;
+  padding-right: 1em;
+  margin : 1em;
+}
+.message-with-media .message-text {
+  margin: .5em auto .7em;
+  padding:0 1em;
+}
+
+
 .message-file {
   width :100%;
   display : block;
   margin: 1em auto;
 }
 .message-text {
-margin: .7em 0;
-font-family: 'Roboto Mono', monospace;
+display: block;
+margin: .7em auto;
+font-family:'Roboto Mono', monospace;
+overflow: visible;
+max-width: 100%;
+height: fit-content;
+text-align: justify;
+font-size: 1.1em;
 }
 .message-actions {
   display: flex;
@@ -237,15 +279,15 @@ font-family: 'Roboto Mono', monospace;
   justify-content: space-between;
 }
 .message-actions p {
-  margin : 0 1em;
+  margin : 1em;
   font-size: .9em;
-
 }
 .message-date {
   display: flex;
   justify-content: flex-end;
   color : grey;
   font-size: 1em;
+  margin-top: .5em;
 }
 
 .answers {
@@ -457,6 +499,117 @@ margin: 1.2em;
 }
 
 .player {
-  width: 640px;
+  width: 100%;
+  height: 15em;
+}
+#search-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.modal-background {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(34, 33, 33, 0.616);
+  z-index: 100
+}
+.search-placeholder {
+  height: 1000px;
+  width: 80vw;
+  background-color: whitesmoke;
+  border-radius: 2em;
+  position: absolute ;
+  top : calc(40% - 500px);
+  left : calc(50% - 40vw);
 }
 
+#search-input {
+  border : 6px solid #03032f;
+  border-radius: .5em;
+  padding: .5em;
+  display: block;
+  margin: 2em auto;
+  background-color: whitesmoke;
+  color :  #03032f;
+  width: 90%;
+  height: 4em;
+}
+
+#results-placeholder{
+  overflow : scroll;
+  display: flex;
+  flex-direction: column;
+  width: 100% ;
+  margin: 0 auto;
+  height: 40vh;
+}
+
+.song-result {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-bottom: 2px solid #03032f;
+  padding : .2em;
+  background-color: none;
+  transition: .5s;
+}
+.song-result  img{
+  width: 200px;
+  margin-right: 2em;
+}
+.song-infos {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.song-infos h3 {
+  color : #03032f;
+  font-size: 1.1em;
+}
+.song-infos p {
+  color : grey;
+  font-size: 1em;
+}
+.select-song {
+  background-color: #03032f81;
+
+}
+
+#close-modal {
+  border-radius: 50%;
+  height: 2em;
+  width: 2em;
+  background-color: teal;
+  color: whitesmoke;
+  padding: .5em;
+  position: absolute;
+  right: 0;
+  top: -.5em;
+  display : flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#alert {
+  position: fixed;
+  top: 4%;
+  left: calc(50% - 30vw);
+  height: 2em;
+  width: 2em;
+  background-color: rgb(204, 133, 133);
+  font-size: 1.8em;
+  text-align: center;
+  /* color :  #03032f; */
+  width: 15em;
+  height: fit-content;
+  border-radius: .5em;
+  padding: .8em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #03032f;
+}
+#alert.hidden {
+display: none;
+}

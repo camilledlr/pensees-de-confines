@@ -2,101 +2,41 @@
   {{#each response}}
   <div class="date-and-msg">
     <div class="date"> {{this.[0]}}</div>
-    <div class="message-by-date">
-    {{#each this}}
-    {{#if this.text}}
-    <div>
-      <div class="message" data-msg-id="{{this._id}}">
-        {{#if this.mood}}
-        <div class="mood-placeholder"><i class="far {{this.mood}} fa-2x"></i></div>
-        {{/if}}
-        <p class="message-date">{{this.send_date}}</p>
-        <span class="message-text">{{this.text}}</span>
-        {{#if this.song}}
-        <div>
-        <iframe class="player"src="https://open.spotify.com/embed/track/{{this.song}}" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+    <div class="message-by-date">{{#each this}}{{#if this.text}}<div>
+        {{#unless this.file}}
+        {{#unless this.song}}
+        <div class="message" data-msg-id="{{this._id}}">
+          {{#if this.mood}}
+          <div class="mood-placeholder"><i class="far {{this.mood}} fa-2x"></i></div>
+          {{/if}}
+          <p class="message-date">{{this.send_date}}</p>
+          <span class="message-text">{{this.text}}</span>
+          <div class="message-actions">
+            <p class="repondre">Répondre</p>
+            <p class="reponses">
+              {{#if this.response.length}}{{this.response.length}} Réponses{{/if}}
+            </p>
+          </div>
         </div>
+        {{/unless}}
+        {{/unless}}
+        {{#if this.song}}
+        {{>mediaMsg}}
         {{/if}}
         {{#if this.file}}
-        {{#unless this.isVideo}}
-        <img class="message-file" alt='file' src='{{this.file}}' />
-        {{/unless}}
-        {{#if this.isVideo}}
-        <video width="90%" controls>
-        <source src='{{this.file}}' type="video/mp4">
-        Your browser does not support the video tag.
-        </video>
-        <img class="message-file" width="90%" alt='file' src='{{this.file}}' />
+        {{>mediaMsg}}
         {{/if}}
-        {{/if}}
-      <div class="message-actions">
-        <p class="repondre">Répondre</p>
-        <p class="reponses">
-          {{#if this.response.length}}{{this.response.length}} Réponses{{/if}}
-        </p>
+        <div class="hidden reply-placeholder">
+          <form class='form-ans' data-msg-id="{{this._id}}">
+            <textarea id="ans"></textarea><button id="send-answer"><i class="fas fa-paper-plane fa-2x"></i></button>
+          </form>
+        </div>
+        <div class="hidden answers" data-msg-id="{{this._id}}">{{#if this.response.length}}{{#each this.response}}<div
+            class="answer">{{this}}</div>{{/each}}{{/if}}</div>
       </div>
-      </div>
-      <div class="hidden reply-placeholder">
-        <form class='form-ans' data-msg-id="{{this._id}}">
-          <textarea id="ans"></textarea><button id="send-answer"><i class="fas fa-paper-plane fa-2x"></i></button>
-        </form>
-      </div>
-      <div class="hidden answers" data-msg-id="{{this._id}}">{{#if this.response.length}}{{#each this.response}}<div class="answer">{{this}}</div>{{/each}}{{/if}}</div>
-    </div>
-    {{/if}}
-    {{/each}}
+      {{/if}}
+      {{/each}}
     </div>
   </div>
   {{/each}}
-</div>
-<div class="footer">
-<div id='is-typing' class="hidden">Quelqu'un est en train d'écrire <div><span>.</span><span>.</span><span>.</span></div>
-</div>
-  <form id='form-msg' enctype="multipart/form-data">
-         <div id='file-preview' class='hidden'>
-            <img id='img-preview' src="" alt="file-preview" width="200px">
-            <p>1 fichier selectionné</p>
-          </div>
-  <div class="type-message-placeholder">
-    <textarea id="m" autocomplete="off"></textarea>
-    <div class='message-buttons'>
-    <div class='mini-buttons'>
-      <input id='file-input' class='hidden' type="file" name="file">
-      <label class='add-file' for="file-input"><i class="fas fa-plus fa-lg"></i></label>
-    </div>
-    <button class="send-message"><i class="fas fa-paper-plane fa-lg"></i></button>
-    </div>
-  </div>
-  <div id='mood-select'>
-  <div id='mood-button'>Choisis un mood <i class="fas fa-chevron-right"></i></div>
-  <div>
-<div id='icn-placeholder'class='hidden icn-placeholder'>
-  <div class='mood-icn'>
-  <input  class='mood-inputs'type="radio" id="happy" name="mood" value="fa-smile-beam">
-  <label class='mood-labels' for="happy"><i class="fas fa-smile-beam"></i></label>
-  </div>
-<div class='mood-icn'>
-  <input class='mood-inputs' type="radio" id="crazy" name="mood" value="fa-grin-tongue-wink">
-  <label class='mood-labels' for="crazy"><i class="fas fa-grin-tongue-wink -"></i>
-</div>
-<div class='mood-icn'>
-  <input class='mood-inputs' type="radio" id="hearts" name="mood" value="fa-grin-hearts"></input>
-  <label class='mood-labels' for="hearts"><i class="fas fa-grin-hearts "></i>
-</div>
-
-<div class='mood-icn'>
-  <input class='mood-inputs' type="radio" id="sad" name="mood" value="fa-sad-cry">
-  <label  class='mood-labels' for="sad"><i class="fas fa-sad-cry "></i></label>
-</div>
-<div class='mood-icn'>
-  <input class='mood-inputs' type="radio" id="scared" name="mood" value="fa-flushed">
-  <label  class='mood-labels' for="scared"><i class="fas fa-flushed "></i></label>
-</div>
-<div class='mood-icn'>
-  <input class='mood-inputs' type="radio" id="angry" name="mood" value="fa-angry"></input>
-  <label  class='mood-labels' for="angry"><i class="fas fa-angry "></i></label>
-</div>
-</div>
-  </div>
-</form>
 </div>
