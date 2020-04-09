@@ -12,6 +12,11 @@
         {{/if}}
         <p class="message-date">{{this.send_date}}</p>
         <span class="message-text">{{this.text}}</span>
+        {{#if this.song}}
+        <div>
+        <iframe class="player"src="https://open.spotify.com/embed/track/{{this.song}}" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+        </div>
+        {{/if}}
         {{#if this.file}}
         {{#unless this.isVideo}}
         <img class="message-file" alt='file' src='{{this.file}}' />

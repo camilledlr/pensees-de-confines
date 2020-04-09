@@ -456,3 +456,8 @@ margin: 1.2em;
   display: none;
 }
 
+.player {
+  width: 100%;
+  height: 15em;
+}
+

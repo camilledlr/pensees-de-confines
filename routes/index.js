@@ -24,13 +24,13 @@ router.get('/', function(req, res, next) {
     const messages = dbRes.reduce((acc, currValue, i, array)=> {
       let date = currValue.send_date;
       let currentDate = isToday(date )? "Aujourd'hui" : isYesterday(date ) ? 'Hier' : moment(date).locale('fr').format('DD MMMM YYYY');
-      const {_id, text, response, mood, file}=  currValue
+      const {_id, text, response, mood, file, song}=  currValue
       let isVideo, ext;
      if (file) ext = file.slice(file.length-3, file.length)
      if (ext === 'jpg' || ext === 'png' || ext === 'gif') isVideo = false;
      if (ext === 'mov' || ext === 'mp4') isVideo = true;
       newCurrValue = {
-        _id, text, response, file, isVideo, send_date : moment(date).format('hh:mm'), mood}
+        _id, text, response, file, isVideo, send_date : moment(date).format('hh:mm'), mood, song}
       if (acc.msgArrays[acc.currentAccIndex].includes(currentDate)) {
         acc.msgArrays[acc.currentAccIndex].push((newCurrValue));
       } else {
