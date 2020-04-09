@@ -14,15 +14,13 @@ import api from "./api.js";
 var selectedSong;
 
 function preventScrolling() {
-  document.body.style.overflow = 'hidden'
-  const allowScrolling = setTimeout(() => {
-    document.body.style.overflow = 'auto'
-  }, 1000);
+  document.getElementById("explanations").classList.add('hidden');
+  document.querySelector("header").classList.add('hidden');
 }
 
 function displayResults (apiRes) {
   apiRes.forEach((track)=> {
-    const result= createElement('div', results, ['song-result']);
+    const result= createElement('div', results, ['song-result'],'', track.id);
     const image = document.createElement('img');
     result.appendChild(image);
     image.src = track.album.images[0].url
@@ -31,11 +29,16 @@ function displayResults (apiRes) {
     const artist= createElement('p', infos, '', track.artists[0].name);
     result.onclick = function (e) {
       selectedSong = track.id;
-      result.classList.toggle('select-song')
+      document.querySelectorAll('.song-result').forEach((result)=>{
+        if (selectedSong == result.getAttribute('id')) {
+          result.classList.add('select-song')
+        } else {
+          result.classList.remove('select-song')
+        }
+      })
       document.getElementById('song-input').value = track.id;
       document.getElementById("file-preview").classList.remove('hidden');
       document.getElementById("img-preview").src = image.src;
-      console.log('on submit', track.id)
     }
   })
 }
@@ -43,7 +46,7 @@ function displayResults (apiRes) {
 
 // request spotify
 //https://api.spotify.com/v1/search?q=bob%20year:2014&type=album
-searchInput.onchange = function (e){
+searchInput.oninput = function (e){
   api.get(`/search?q=${e.target.value}`)
   .then(apiRes=> {
     results.innerHTML =''
@@ -66,6 +69,10 @@ songButton.onclick = function(e) {
 }
 
 document.getElementById('close-modal').onclick = function clodeModal (e) {
+  document.getElementById('search-modal').classList.add('hidden')
+  document.querySelector('.footer').classList.toggle('hidden')
+}
+document.getElementById('select-song-button').onclick = function clodeModal (e) {
   document.getElementById('search-modal').classList.add('hidden')
   document.querySelector('.footer').classList.toggle('hidden')
 }
@@ -147,6 +154,7 @@ var resetMessage = () => {
 // Poster un message
 document.getElementById("form-msg").onsubmit = function (e) {
   e.preventDefault();
+  preventScrolling()
   if (document.getElementById("m").value == "") return displayAlert('Il manque un texte à ton post :)');
   let moodSelected = '';
   let song = document.getElementById('song-input').value
@@ -165,20 +173,19 @@ document.getElementById("form-msg").onsubmit = function (e) {
     .catch(apiErr => {if (imageFile.files[0]) {displayAlert('Le format du fichier est invalide :(')
     }else { displayAlert('Une erreur est survenue : (') }
   })
-  preventScrolling()
 };
 
 // poster une réponse
 formsAns.forEach((form) => {
   form.onsubmit = function (e) {
     e.preventDefault();
+    preventScrolling()
     const id = e.target.getAttribute("data-msg-id");
     socket.emit("post answer", id, e.target.firstElementChild.value);
     e.target.firstElementChild.value = "";
     e.target.parentNode.classList.toggle("hidden");
     return false;
   };
-  preventScrolling()
 });
 
 // Déclencher l'événement "is typing"
@@ -191,6 +198,7 @@ typeInput.onkeydown = function (e) {
 
 // Afficher un nouveau message
 socket.on("chat message", function (msg) {
+  preventScrolling()
   const msgclass = msg.file || msg.song ? 'message-with-media' : 'message'
   const msgByDate = document.getElementById('messages').querySelector(':nth-child(2)')
   const formerFirst = msgByDate.firstChild
@@ -283,7 +291,6 @@ socket.on("chat message", function (msg) {
   document
     .getElementById("messages")
     .scrollTo(0, 0);
-    preventScrolling()
 });
 
 //Afficher une nouvelle réponse
