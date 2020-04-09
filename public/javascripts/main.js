@@ -46,7 +46,7 @@ function displayResults (apiRes) {
 
 // request spotify
 //https://api.spotify.com/v1/search?q=bob%20year:2014&type=album
-searchInput.oninput = function (e){
+searchInput.onchange = function (e){
   api.get(`/search?q=${e.target.value}`)
   .then(apiRes=> {
     results.innerHTML =''
