@@ -6,7 +6,7 @@ require('moment/locale/fr');
 const uploadCloud = require("../config/cloudinary");
 const axios = require('axios')
 var request = require('request'); // "Request" library
-
+const momentTimezone = require('moment-timezone');
 var client_id = process.env.CLIENT_ID;
 var client_secret = process.env.CLIENT_SECRET;
 
@@ -65,6 +65,8 @@ router.get('/', function(req, res, next) {
   .catch(dbErr => console.log(dbErr))
 });
 router.post('/new', uploadCloud.single("file"),function(req, res, next) {
+  
+  console.log('maintenant', moment.tz(Date.now(), 'Europe/Paris'))
   let io = req.app.get('socketio');
   let newMsg = {};
   newMsg.text = req.body.text;
