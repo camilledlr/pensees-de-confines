@@ -11,6 +11,14 @@ const result = document.querySelectorAll('song-result');
 const songButton = document.querySelector(".song-label");
 var socket = io();
 import api from "./api.js";
+var selectedSong;
+
+function preventScrolling() {
+  document.body.style.overflow = 'hidden'
+  const allowScrolling = setTimeout(() => {
+    document.body.style.overflow = 'auto'
+  }, 1000);
+}
 
 function displayResults (apiRes) {
   apiRes.forEach((track)=> {
@@ -22,6 +30,7 @@ function displayResults (apiRes) {
     const title= createElement('h3', infos, '', track.name);
     const artist= createElement('p', infos, '', track.artists[0].name);
     result.onclick = function (e) {
+      selectedSong = track.id;
       result.classList.toggle('select-song')
       document.getElementById('song-input').value = track.id;
       document.getElementById("file-preview").classList.remove('hidden');
@@ -51,6 +60,7 @@ imageFile.onchange = function (e){
 } 
 // display search modal
 songButton.onclick = function(e) {
+  preventScrolling()
   document.getElementById('search-modal').classList.toggle('hidden')
   document.querySelector('.footer').classList.toggle('hidden')
 }
@@ -155,6 +165,7 @@ document.getElementById("form-msg").onsubmit = function (e) {
     .catch(apiErr => {if (imageFile.files[0]) {displayAlert('Le format du fichier est invalide :(')
     }else { displayAlert('Une erreur est survenue : (') }
   })
+  preventScrolling()
 };
 
 // poster une réponse
@@ -167,6 +178,7 @@ formsAns.forEach((form) => {
     e.target.parentNode.classList.toggle("hidden");
     return false;
   };
+  preventScrolling()
 });
 
 // Déclencher l'événement "is typing"
@@ -271,6 +283,7 @@ socket.on("chat message", function (msg) {
   document
     .getElementById("messages")
     .scrollTo(0, 0);
+    preventScrolling()
 });
 
 //Afficher une nouvelle réponse
@@ -303,10 +316,11 @@ socket.on("post answer", function (ans, msg_id) {
       Number(formerNb) + 1
     } Réponses`;
   }
-
+  preventScrolling()
   AnsPlaceholder.classList.remove("hidden");
   const position = AnsPlaceholder.offsetTop/1.5
   document.getElementById("messages").scrollTo(0, position);
+
 });
 
 //Display 'is typing'
@@ -353,6 +367,7 @@ function autosize() {
 
 // Display icons
 document.getElementById("mood-button").onclick = (e) => {
+  preventScrolling()
   const container = document.querySelector("#mood-select");
   const icns = document.querySelector(".icn-placeholder");
   if (container.classList.contains("expand")) {
