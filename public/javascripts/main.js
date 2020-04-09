@@ -216,7 +216,7 @@ socket.on("chat message", function (msg) {
     "p",
     newMsg,
     ["message-date"],
-    moment(msg.send_date).format("hh:mm"),
+    moment(msg.send_date).format("HH:mm"),
     ""
   );
   const textMsg = createElement(
