@@ -49,7 +49,7 @@ router.get('/', function(req, res, next) {
      if (ext === 'jpg' || ext === 'png' || ext === 'gif') isVideo = false;
      if (ext === 'mov' || ext === 'mp4') isVideo = true;
       newCurrValue = {
-        _id, text, response, file, isVideo, send_date : moment(date).format('hh:mm'), mood, song}
+        _id, text, response, file, isVideo, send_date : moment(date).format('hh:mm').locale('fr'), mood, song}
       if (acc.msgArrays[acc.currentAccIndex].includes(currentDate)) {
         acc.msgArrays[acc.currentAccIndex].push((newCurrValue));
       } else {
